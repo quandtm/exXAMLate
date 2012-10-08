@@ -15,9 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="ExXAMLate.App">
-      <VisualElements DisplayName="ExXAMLate" 
-                      Logo="Assets\Logo.png" 
-                      SmallLogo="Assets\SmallLogo.png" Description="ExXAMLate" ForegroundText="light" BackgroundColor="#464646">
+      <VisualElements DisplayName="ExXAMLate" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="ExXAMLate" ForegroundText="light" BackgroundColor="#009BBD">
         <DefaultTile ShowName="allLogos" />
         <SplashScreen Image="Assets\SplashScreen.png" />
       </VisualElements>
