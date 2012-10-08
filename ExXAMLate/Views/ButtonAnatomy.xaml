@@ -1,0 +1,47 @@
+﻿<UserControl
+    x:Class="ExXAMLate.Views.ButtonAnatomy"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Width="400"
+    d:DesignWidth="400" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF008BFF">
+    
+    <Grid Height="500" VerticalAlignment="Top" Background="#FF009BBD">
+    
+		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Anatomy of AppBarButton Style" VerticalAlignment="Top" Style="{StaticResource SubheaderTextStyle}" Margin="10,0,0,0"/>
+    
+		<Grid Width="400" Height="320" VerticalAlignment="Bottom" Margin="0,0,0,55">
+			<Button HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource SendAppBarButtonStyle}" RenderTransformOrigin="0.5,0.5" Margin="100,85,0,0" IsHitTestVisible="False">
+				<Button.RenderTransform>
+					<CompositeTransform TranslateX="1" ScaleX="3" ScaleY="3"/>
+				</Button.RenderTransform>
+			</Button>
+			<TextBlock HorizontalAlignment="Left" Margin="240,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource BasicTextStyle}">
+				<Run FontWeight="Bold" Text="Automation.Name"/>
+				<LineBreak/>
+				<Run Text="This is an "/>
+				<Run FontStyle="Italic" Text="attached proproperty"/>
+				<Run FontStyle="Italic" Text=" "/>
+				<Run Text="and won't show up in Blend"/>
+			</TextBlock>
+			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="240,10,0,0" Style="{StaticResource BasicTextStyle}" Width="150">
+				<Run FontWeight="Bold" Text="Content"/>
+				<LineBreak/>
+				<Run Text="this is a unicode value "/>
+				<Run Text="from the "/>
+				<Run Text="Segoe UI Symbol"/>
+				<Run Text=" font"/>
+			</TextBlock>
+			<Path Data="M235,285 L170,285" Fill="White" HorizontalAlignment="Left" Height="5" Margin="168,283,0,0" Stretch="Fill" Stroke="White" StrokeThickness="5" UseLayoutRounding="False" VerticalAlignment="Top" Width="70"/>
+			<Path Data="M172.25,285 L172.25,217.194" Fill="White" HorizontalAlignment="Left" Height="72.806" Margin="170.25,215.194,0,0" Stretch="Fill" Stroke="White" StrokeThickness="5" UseLayoutRounding="False" VerticalAlignment="Top" Width="5"/>
+			<Path Data="M325,88 L325,140" Fill="White" HorizontalAlignment="Left" Height="29" Margin="323,86,0,0" Stretch="Fill" Stroke="White" StrokeThickness="5" UseLayoutRounding="False" VerticalAlignment="Top" Width="8"/>
+			<Path Data="M328,140 L195,140" Fill="White" HorizontalAlignment="Left" Height="5" Margin="197.583,110,0,0" Stretch="Fill" Stroke="White" StrokeThickness="5" UseLayoutRounding="False" VerticalAlignment="Top" Width="133.417"/>
+
+		</Grid>
+		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,45,10,0" Style="{StaticResource BodyTextStyle}">
+			<Run Text="Windows 8 ships with lots of buttons and icons available for developers"/>
+			<Run Text=", but it can be a bit tricky trying to figure out which one is right for you, and how to customise them"/>
+		</TextBlock>
+	</Grid>
+</UserControl>

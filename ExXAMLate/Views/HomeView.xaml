@@ -1,0 +1,108 @@
+﻿<common:LayoutAwarePage
+    x:Name="pageRoot"
+    x:Class="ExXAMLate.Views.HomeView"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:common="using:ExXAMLate.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:callistoEffects="using:Callisto.Effects" mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="ButtonTemplate">
+            <Border Width="300" Height="150" Background="#FF009BBD" callistoEffects:Tilt.IsTiltEnabled="True"  BorderBrush="{x:Null}">
+                    <Grid Margin="10" VerticalAlignment="Bottom">
+                        <TextBlock Text="{Binding }" Style="{StaticResource SubheaderTextStyle}"/>
+                    </Grid>
+            </Border>
+        </DataTemplate>
+
+        <Style x:Key="DefaultTemplate" TargetType="GroupItem">
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GroupItem">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <ContentControl x:Name="HeaderContent" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" Content="{TemplateBinding Content}" IsTabStop="False" Margin="{TemplateBinding Padding}" TabIndex="0"/>
+                                <ItemsControl x:Name="ItemsControl" IsTabStop="False" ItemsSource="{Binding GroupItems}" Grid.Row="1" TabIndex="1" TabNavigation="Once">
+                                    <ItemsControl.ItemContainerTransitions>
+                                        <TransitionCollection>
+                                        </TransitionCollection>
+                                    </ItemsControl.ItemContainerTransitions>
+                                </ItemsControl>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <common:ContainerStyleSelector x:Key="ContainerStyleSelector" DefaultTemplate="{StaticResource DefaultTemplate}"/>
+        <CollectionViewSource
+            x:Name="groupedItemsViewSource"
+            Source="{Binding Groups}"
+            IsSourceGrouped="true"
+            ItemsPath="Items"/>
+    </Page.Resources>
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Horizontal scrolling grid used in most view states -->
+        <GridView
+            x:Name="itemGridView"
+            AutomationProperties.AutomationId="ItemGridView"
+            AutomationProperties.Name="Grouped Items"
+            Grid.RowSpan="2"
+            ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
+            Padding="116,137,40,46"
+            SelectionMode="None"
+            IsSwipeEnabled="false"
+            ItemTemplate="{StaticResource ButtonTemplate}"
+            ItemClick="itemGridView_ItemClick_1"
+            IsItemClickEnabled="True">
+
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+            <GridView.GroupStyle>
+                <GroupStyle ContainerStyleSelector="{StaticResource ContainerStyleSelector}">
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid Margin="1,0,0,6">
+                                <Button AutomationProperties.Name="Group Title" Style="{StaticResource TextPrimaryButtonStyle}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Title}" Margin="3,0,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
+                                        <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,0,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <VariableSizedWrapGrid Orientation="Vertical" Margin="0"/>
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </GridView.GroupStyle>
+        </GridView>
+        
+        <Grid Margin="120,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Grid.Column="1" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}"/>
+        </Grid>
+    </Grid>
+</common:LayoutAwarePage>
