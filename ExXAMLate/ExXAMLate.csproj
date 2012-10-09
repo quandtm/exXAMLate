@@ -112,6 +112,7 @@
     <Compile Include="Common\ButtonStyleConverter.cs" />
     <Compile Include="Common\ContainerStyleSelector.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="ViewModels\HammerPantsViewModel.cs" />
     <Compile Include="Models\HomeGroup.cs" />
     <Compile Include="Models\HomeViewGroupItem.cs" />
     <Compile Include="Models\AppXModel.cs" />
@@ -125,6 +126,9 @@
     <Compile Include="Common\ZipArchiveEntryExtensions.cs" />
     <Compile Include="Views\AppXView.xaml.cs">
       <DependentUpon>AppXView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HammerPantsView.xaml.cs">
+      <DependentUpon>HammerPantsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
@@ -190,6 +194,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\HammerPantsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -221,6 +229,29 @@
     <Reference Include="Okra.MEF">
       <HintPath>..\packages\Okra.MEF.0.9.4\lib\.NETCore45\Okra.MEF.dll</HintPath>
     </Reference>
+    <Reference Include="SharpDX">
+      <HintPath>..\packages\SharpDX.2.3.1\lib\winrt\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.D3DCompiler">
+      <HintPath>..\packages\SharpDX.D3DCompiler.2.3.1\lib\winrt\SharpDX.D3DCompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct2D1">
+      <HintPath>..\packages\SharpDX.Direct2D1.2.3.1\lib\winrt\SharpDX.Direct2D1.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11">
+      <HintPath>..\packages\SharpDX.Direct3D11.2.3.1\lib\winrt\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI">
+      <HintPath>..\packages\SharpDX.DXGI.2.3.1\lib\winrt\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ColourPicker.0.0.3-ALPHA\lib\NetCore45\SharpDX.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit.Graphics, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ColourPicker.0.0.3-ALPHA\lib\NetCore45\SharpDX.Toolkit.Graphics.dll</HintPath>
+    </Reference>
     <Reference Include="System.Composition.AttributedModel">
       <HintPath>..\packages\Microsoft.Composition.1.0.15\lib\netcore45\System.Composition.AttributedModel.dll</HintPath>
     </Reference>
@@ -235,6 +266,10 @@
     </Reference>
     <Reference Include="System.Composition.TypedParts">
       <HintPath>..\packages\Microsoft.Composition.1.0.15\lib\netcore45\System.Composition.TypedParts.dll</HintPath>
+    </Reference>
+    <Reference Include="VikingCode.ColourPicker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ColourPicker.0.0.3-ALPHA\lib\NetCore45\VikingCode.ColourPicker.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />

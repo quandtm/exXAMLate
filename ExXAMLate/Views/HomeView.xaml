@@ -79,18 +79,18 @@
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
                             <Grid Margin="1,0,0,6">
-                                <Button AutomationProperties.Name="Group Title" Style="{StaticResource TextPrimaryButtonStyle}">
+                                <!--<Button AutomationProperties.Name="Group Title" Style="{StaticResource TextPrimaryButtonStyle}">-->
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{Binding Title}" Margin="3,0,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
-                                        <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,0,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
+                                        <!--<TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,0,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>-->
                                     </StackPanel>
-                                </Button>
+                                <!--</Button>-->
                             </Grid>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                     <GroupStyle.Panel>
                         <ItemsPanelTemplate>
-                            <VariableSizedWrapGrid Orientation="Vertical" Margin="0"/>
+                            <VariableSizedWrapGrid Orientation="Vertical" Margin="0,0,50,0"/>
                         </ItemsPanelTemplate>
                     </GroupStyle.Panel>
                 </GroupStyle>

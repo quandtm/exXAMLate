@@ -16,10 +16,12 @@ namespace ExXAMLate.ViewModels
             var projects = new HomeGroup("Projects");
             projects.Items.Add(new HomeViewGroupItem { Title = "App Checklist" });
             projects.Items.Add(new HomeViewGroupItem { Title = "AppX Viewer", Clicked = new DelegateCommand(() => _navigation.NavigateTo("AppX"))});
-
+            
             var resourceGroup = new HomeGroup("Resources");
             resourceGroup.Items.Add(new HomeViewGroupItem { Title = "Icons", Clicked = new DelegateCommand(GoToIconView) });
             resourceGroup.Items.Add(new HomeViewGroupItem { Title = "TextBlock Styles", Clicked = new DelegateCommand(GoToTextStyleView) });
+            resourceGroup.Items.Add(new HomeViewGroupItem { Title = "Insta-XAML Customisation", Clicked = new DelegateCommand(() => _navigation.NavigateTo("HammerPants")) });
+
             Groups = new ObservableCollection<IGroup>
                 {
                     projects,

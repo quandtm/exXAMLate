@@ -18,6 +18,10 @@
       <VisualElements DisplayName="ExXAMLate" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="ExXAMLate" ForegroundText="light" BackgroundColor="#009BBD">
         <DefaultTile ShowName="allLogos" />
         <SplashScreen Image="Assets\SplashScreen.png" />
+        <InitialRotationPreference>
+          <Rotation Preference="landscape" />
+          <Rotation Preference="landscapeFlipped" />
+        </InitialRotationPreference>
       </VisualElements>
       <Extensions>
         <Extension Category="windows.search" />
