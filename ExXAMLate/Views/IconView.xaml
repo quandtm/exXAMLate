@@ -133,7 +133,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Command="{Binding GoBack}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Text="Icons" Grid.Column="1" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}"/>
+            <TextBlock x:Name="pageTitle" Text="Icons" Grid.Column="1" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}" FontFamily="Assets/fighting spirit TBS.ttf#Fighting Spirit TBS"/>
         </Grid>
         
         <VisualStateManager.VisualStateGroups>

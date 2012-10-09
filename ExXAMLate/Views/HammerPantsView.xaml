@@ -30,7 +30,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Command="{Binding GoBack}" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="Insta-XAML customisation" Style="{StaticResource PageHeaderTextStyle}"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="Insta-XAML customisation" Style="{StaticResource PageHeaderTextStyle}" FontFamily="Assets/fighting spirit TBS.ttf#Fighting Spirit TBS"/>
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top">
             <StackPanel Background="#FF009BBD"  Width="400" HorizontalAlignment="Left" VerticalAlignment="Top" >
@@ -48,6 +48,19 @@
         </StackPanel>
 
         <Button Content="Generate" Margin="0,335,0,255" Grid.Row="1" Grid.Column="1" Command="{Binding Generate}" />
+
+        <Grid x:Name="noSnapped" Background="#FF009BBD" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Image Source="/assets/Logo.png" Stretch="None" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Style="{StaticResource NextAppBarButtonStyle}" AutomationProperties.Name="" Click="Button_Click_1" Margin="-20" />
+                    <TextBlock Text="Insta-XAML needs to be fullscreen" Style="{StaticResource BasicTextStyle}"/>
+                </StackPanel>
+                 
+               
+            </StackPanel>
+            
+        </Grid>
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->
@@ -73,6 +86,10 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
                         </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="noSnapped" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>

@@ -1384,7 +1384,6 @@
     <!-- Title area styles -->
 
     <Style x:Key="PageHeaderTextStyle" TargetType="TextBlock" BasedOn="{StaticResource HeaderTextStyle}">
-        <Setter Property="FontFamily" Value="Assets/fighting spirit TBS.ttf#Fighting Spirit TBS" />
         <Setter Property="TextWrapping" Value="NoWrap"/>
         <Setter Property="VerticalAlignment" Value="Bottom"/>
         <Setter Property="Margin" Value="0,0,30,40"/>

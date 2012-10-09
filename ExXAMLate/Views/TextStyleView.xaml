@@ -10,7 +10,7 @@
         <common:ButtonStyleConverter x:Key="ButtonStyleConverter" />
 
         <DataTemplate x:Key="ButtonTemplate">
-            <TextBlock Text="{Binding }" Style="{Binding Converter={StaticResource ButtonStyleConverter}}" Width="450" />
+            <TextBlock Text="{Binding }" Style="{Binding Converter={StaticResource ButtonStyleConverter}}" Width="470" Margin="0" />
         </DataTemplate>
 
 
@@ -121,7 +121,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Command="{Binding GoBack}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Text="Text Styles" Grid.Column="1" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}"/>
+            <TextBlock x:Name="pageTitle" Text="Text Styles" Grid.Column="1" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}" FontFamily="Assets/fighting spirit TBS.ttf#Fighting Spirit TBS"/>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
