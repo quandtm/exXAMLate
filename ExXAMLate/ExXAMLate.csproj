@@ -114,6 +114,8 @@
     <Compile Include="Common\ButtonStyleConverter.cs" />
     <Compile Include="Common\ContainerStyleSelector.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\AppXIcon.cs" />
+    <Compile Include="Models\AppXTile.cs" />
     <Compile Include="ViewModels\HammerPantsViewModel.cs" />
     <Compile Include="Models\HomeGroup.cs" />
     <Compile Include="Models\HomeViewGroupItem.cs" />
@@ -152,6 +154,9 @@
     <Compile Include="Common\LayoutAwarePage.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="Views\ItemsPage1.xaml.cs">
+      <DependentUpon>ItemsPage1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SearchView.xaml.cs">
       <DependentUpon>SearchView.xaml</DependentUpon>
     </Compile>
@@ -208,6 +213,10 @@
     <Page Include="Views\ButtonAnatomy.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ItemsPage1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SearchView.xaml">
       <SubType>Designer</SubType>

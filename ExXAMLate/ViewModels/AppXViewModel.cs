@@ -16,17 +16,6 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace ExXAMLate.ViewModels
 {
-    public class AppXIcon
-    {
-        public BitmapImage Image { get; set; }
-        public string Description { get; set; }
-        public string Title { get; set; }
-    }
-
-    public class AppXTile : AppXIcon
-    {
-        public string AppTitle { get; set; }
-    }
     public class AppXViewModel : NotifyPropertyChangedBase
     {
         public ObservableCollection<AppXIcon> Icons { get; set; }
@@ -56,6 +45,8 @@ namespace ExXAMLate.ViewModels
         {
             try
             {
+                Windows.UI.ViewManagement.ApplicationView.TryUnsnap();
+
                 var f = new FileOpenPicker()
                     {
                         FileTypeFilter = { ".appx" }

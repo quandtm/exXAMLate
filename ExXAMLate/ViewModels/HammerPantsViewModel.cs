@@ -38,8 +38,8 @@ namespace ExXAMLate.ViewModels
                     var x = new Hammer.Pants.ResourceFileParser(y);
                     var newDoc = x.Update(SelectedColor.ToString());
 
-                    var fsp = new FileSavePicker();
-                    fsp.FileTypeChoices.Add("XAML Document", new List<string>() { ".xaml" });
+                    var fsp = new FileSavePicker() {SuggestedFileName = "Generic.xaml"};
+                    fsp.FileTypeChoices.Add("XAML Document", new List<string> { ".xaml" });
                     var file = await fsp.PickSaveFileAsync();
                     if (file == null)
                         return;

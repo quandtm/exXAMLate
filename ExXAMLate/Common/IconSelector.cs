@@ -1,3 +1,4 @@
+using ExXAMLate.Models;
 using ExXAMLate.ViewModels;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
