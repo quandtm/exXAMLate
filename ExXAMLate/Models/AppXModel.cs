@@ -10,6 +10,8 @@ namespace ExXAMLate.Models
         public string Logo { get; set; }
         public BitmapSource LogoImage { get; set; }
         public BitmapSource SmallLogoImage { get; set; }
+        public BitmapSource StoreLogoImage { get; set; }
+        public BitmapSource WideLogoImage { get; set; }
         public string SmallLogo { get; set; }
         public string WideLogo { get; set; }
         public string StoreLogo { get; set; }

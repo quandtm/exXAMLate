@@ -62,18 +62,40 @@ namespace ExXAMLate.ViewModels
                 var visuals = application.Element(ns + "VisualElements");
 
                 model.DisplayName = visuals.Attribute("DisplayName").Value;
-                model.Logo = visuals.Attribute("Logo").Value;
-                model.SmallLogo = visuals.Attribute("SmallLogo").Value;
-
-                var logoFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(model.DisplayName + ".png", CreationCollisionOption.ReplaceExisting);
-                await zip.GetEntry(model.Logo.Replace('\\', '/')).SaveToFile(logoFile);
-                model.LogoImage = new BitmapImage(new Uri(logoFile.Path));
-
-                var smalllogoFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(model.DisplayName + "small.png", CreationCollisionOption.ReplaceExisting);
-                await zip.GetEntry(model.SmallLogo.Replace('\\', '/')).SaveToFile(smalllogoFile);
-                model.SmallLogoImage = new BitmapImage(new Uri(smalllogoFile.Path));
-
+                if (visuals.Attribute("Logo") != null)
+                {
+                    model.Logo = visuals.Attribute("Logo").Value;
+                    var logoFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(model.DisplayName + ".png", CreationCollisionOption.ReplaceExisting);
+                    await zip.GetEntry(model.Logo.Replace('\\', '/')).SaveToFile(logoFile);
+                    model.LogoImage = new BitmapImage(new Uri(logoFile.Path));
                
+               
+                }
+
+                if (visuals.Attribute("SmallLogo") != null)
+                {
+                    var smalllogoFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(model.DisplayName + "small.png", CreationCollisionOption.ReplaceExisting);
+                    await zip.GetEntry(visuals.Attribute("SmallLogo").Value.Replace('\\', '/')).SaveToFile(smalllogoFile);
+                    model.SmallLogoImage = new BitmapImage(new Uri(smalllogoFile.Path));
+                }
+
+
+                if (package.Element(ns + "Properties").Element(ns + "Logo") != null)
+                {
+                    var storelogoimage = await ApplicationData.Current.LocalFolder.CreateFileAsync(model.DisplayName + "store.png", CreationCollisionOption.ReplaceExisting);
+                    await zip.GetEntry(package.Element(ns + "Properties").Element(ns + "Logo").Value.Replace('\\', '/')).SaveToFile(storelogoimage);
+                    model.StoreLogoImage = new BitmapImage(new Uri(storelogoimage.Path));
+                }
+
+
+                //if (visuals.Attribute("WideLogoImage") != null)
+                //{
+                //    //model.SmallLogo = visuals.Attribute("WideLogo").Value;
+                //    var widelogoimage = await ApplicationData.Current.LocalFolder.CreateFileAsync(model.DisplayName + "wide.png", CreationCollisionOption.ReplaceExisting);
+                //    await zip.GetEntry(model.SmallLogo.Replace('\\', '/')).SaveToFile(widelogoimage);
+                //    model.WideLogoImage = new BitmapImage(new Uri(widelogoimage.Path));
+                //}
+
                 model.Background = new SolidColorBrush(ColorExtensions.FromString(visuals.Attribute("BackgroundColor").Value));
 
                 Model = model;
