@@ -5,9 +5,44 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:common="using:ExXAMLate.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:callistoEffects="using:Callisto.Effects" mc:Ignorable="d">
+    xmlns:callistoEffects="using:Callisto.Effects" xmlns:Controls="using:Callisto.Controls" mc:Ignorable="d">
+    <common:LayoutAwarePage.Resources>
+        <DataTemplate x:Key="iconTemplate">
+            <Grid Height="150" Width="600" HorizontalAlignment="Left">
+                <Border Background="{Binding ElementName=pageRoot, Path=DataContext.Model.Background}" callistoEffects:Tilt.IsTiltEnabled="True"  BorderBrush="{x:Null}" Margin="275,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Grid >
+                        <Image Source="{Binding Image}" Stretch="None" />
+                    </Grid>
+                </Border>
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Title}" VerticalAlignment="Top" Style="{StaticResource SubheaderTextStyle}"/>
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="85" Width="275" Margin="0,35,0,0" Style="{StaticResource BasicTextStyle}" Text="{Binding Description}" />
+            </Grid>
+        </DataTemplate>
 
-    <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource BackgroundBrush}">
+        <DataTemplate x:Key="tileTemplate">
+            <Grid Height="150" Width="600" HorizontalAlignment="Left">
+                <Border Background="{Binding ElementName=pageRoot, Path=DataContext.Model.Background}" callistoEffects:Tilt.IsTiltEnabled="True"  BorderBrush="{x:Null}" Margin="275,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="310" Height="70">
+                    <Grid >
+                        <Image Source="{Binding Image}" Stretch="Uniform" HorizontalAlignment="Left" Height="60" Width="60" Margin="5" />
+                        <TextBlock Text="{Binding AppTitle}" Margin="70,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" />
+                        <Controls:Rating HorizontalAlignment="Left" Height="40" Margin="0" VerticalAlignment="Top" ItemCount="5" Value="2" Background="{x:Null}" Foreground="White" RenderTransformOrigin="0.5,0.5">
+                            <Controls:Rating.RenderTransform>
+                                <CompositeTransform TranslateX="20" TranslateY="15" ScaleX="0.5" ScaleY="0.5"/>
+                            </Controls:Rating.RenderTransform>
+                        </Controls:Rating>
+                        <TextBlock Text="Category" Margin="170,25,0,0" />
+                        <TextBlock Text="$Price" Margin="70,45,0,0" />
+                    </Grid>
+                </Border>
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Title}" VerticalAlignment="Top" Style="{StaticResource SubheaderTextStyle}"/>
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="85" Width="275" Margin="0,35,0,0" Style="{StaticResource BasicTextStyle}" Text="{Binding Description}" />
+            </Grid>
+        </DataTemplate>
+        
+        <common:IconSelector x:Key="IconSelector" IconTemplate="{StaticResource iconTemplate}" TileTemplate="{StaticResource tileTemplate}"/>
+        
+    </common:LayoutAwarePage.Resources>
+        <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource BackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
@@ -24,22 +59,7 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <StackPanel HorizontalAlignment="Left">
-
-                <Border Width="30" Height="30" Background="{Binding Model.Background}" callistoEffects:Tilt.IsTiltEnabled="True"  BorderBrush="{x:Null}" Margin="10">
-                    <Grid >
-                        <Image Source="{Binding Model.SmallLogoImage}" Stretch="None" />
-                    </Grid>
-                </Border>
-
-                <Border Width="150" Height="150" Background="{Binding Model.Background}" callistoEffects:Tilt.IsTiltEnabled="True"  BorderBrush="{x:Null}" Margin="10">
-                    <Grid >
-                        <Image Source="{Binding Model.LogoImage}" Stretch="None" />
-                        <TextBlock Text="{Binding Model.DisplayName}" Style="{StaticResource SubheaderTextStyle}" VerticalAlignment="Bottom"/>
-                    </Grid>
-                </Border>
-
-            </StackPanel>
+            <GridView Background="{x:Null}" ItemsSource="{Binding Icons}" Margin="120,0,0,0" SelectionMode="None" ItemTemplateSelector="{StaticResource IconSelector}" />
         </Grid>
         <VisualStateManager.VisualStateGroups>
 
