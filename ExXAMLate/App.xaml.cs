@@ -17,7 +17,7 @@ namespace ExXAMLate
             InitializeComponent();
             var bootstrapper = new AppBootstrapper();
             bootstrapper.Initialize();
-            bootstrapper.SearchManager.SearchPageName = "Search";
+            //bootstrapper.SearchManager.SearchPageName = "Search";
             NavigationManager = bootstrapper.NavigationManager;
             bootstrapper.ActivationManager.Activated += ActivationManagerActivated;
         }

@@ -109,6 +109,7 @@
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Common\IconSelector.cs" />
+    <Compile Include="Models\AppXSplash.cs" />
     <Compile Include="Models\ButtonAnatomyGroup.cs" />
     <Compile Include="Models\ButtonGroup.cs" />
     <Compile Include="Common\ButtonStyleConverter.cs" />

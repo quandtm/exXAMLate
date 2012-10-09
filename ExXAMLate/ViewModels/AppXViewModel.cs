@@ -68,31 +68,34 @@ namespace ExXAMLate.ViewModels
                 var visuals = application.Element(ns + "VisualElements");
 
                 model.DisplayName = visuals.Attribute("DisplayName").Value;
+                model.Background = new SolidColorBrush(ColorExtensions.FromString(visuals.Attribute("BackgroundColor").Value));
+
                 var logo = new AppXIcon() { Description = "The \"regular\" logo is displayed as your square tile. It measures 150x150", Title = "Logo" };
                 if (visuals.Attribute("Logo") != null)
                 {
-                    model.Logo = visuals.Attribute("Logo").Value;
+                    var logopath = visuals.Attribute("Logo").Value;
                     var logoFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(model.DisplayName + ".png", CreationCollisionOption.ReplaceExisting);
-                    await zip.GetEntry(model.Logo.Replace('\\', '/')).SaveToFile(logoFile);
+                    await zip.GetEntry(logopath.Replace('\\', '/')).SaveToFile(logoFile);
                     logo.Image = new BitmapImage(new Uri(logoFile.Path));
                 }
 
                 var smallLogo = new AppXIcon { Description = "The small logo is displayed in search results, \"show all apps\", and in the search charm (vertical list). It measures 30x30.", Title = "Small Logo" };
                 if (visuals.Attribute("SmallLogo") != null)
-                {
-                    var smalllogoFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(model.DisplayName + "small.png", CreationCollisionOption.ReplaceExisting);
-                    await zip.GetEntry(visuals.Attribute("SmallLogo").Value.Replace('\\', '/')).SaveToFile(smalllogoFile);
-                    smallLogo.Image = new BitmapImage(new Uri(smalllogoFile.Path));
-                }
+                    await GetImage(zip, model.DisplayName + "small.png", visuals.Attribute("SmallLogo").Value, smallLogo);
 
-                var storeLogo = new AppXTile { Description = "The store logo is visible on the Windows Store on the web and within the Windows Store app.", Title = "Store Logo", AppTitle = model.DisplayName};
+                var storeLogo = new AppXTile { Description = "The store logo is visible on the Windows Store on the web and within the Windows Store app.", Title = "Store Logo", AppTitle = model.DisplayName };
                 if (package.Element(ns + "Properties").Element(ns + "Logo") != null)
-                {
-                    var storelogoimage = await ApplicationData.Current.LocalFolder.CreateFileAsync(model.DisplayName + "store.png", CreationCollisionOption.ReplaceExisting);
-                    await zip.GetEntry(package.Element(ns + "Properties").Element(ns + "Logo").Value.Replace('\\', '/')).SaveToFile(storelogoimage);
-                    storeLogo.Image = new BitmapImage(new Uri(storelogoimage.Path));
-                }
+                    await GetImage(zip, model.DisplayName + "store.png", package.Element(ns + "Properties").Element(ns + "Logo").Value, storeLogo);
 
+                var splash = new AppXSplash { Description = "", Title = "Splash Screen" };
+                if (visuals.Element(ns + "SplashScreen").Attribute("Image") != null)
+                    await GetImage(zip, model.DisplayName + "splash.png", visuals.Element(ns + "SplashScreen").Attribute("Image").Value, splash);
+
+                if (visuals.Element(ns + "SplashScreen").Attribute("BackgroundColor") != null)
+                    splash.Background = new SolidColorBrush(ColorExtensions.FromString(visuals.Element(ns + "SplashScreen").Attribute("BackgroundColor").Value));
+                else
+                    splash.Background = model.Background;
+                
 
                 //if (visuals.Attribute("WideLogoImage") != null)
                 //{
@@ -102,17 +105,25 @@ namespace ExXAMLate.ViewModels
                 //    model.WideLogoImage = new BitmapImage(new Uri(widelogoimage.Path));
                 //}
 
-                model.Background = new SolidColorBrush(ColorExtensions.FromString(visuals.Attribute("BackgroundColor").Value));
+              
 
                 Model = model;
                 Icons.Add(smallLogo);
                 Icons.Add(storeLogo);
                 Icons.Add(logo);
+                Icons.Add(splash);
             }
             catch (Exception o_0)
             {
 
             }
+        }
+
+        private static async Task GetImage(ZipArchive zip, string displayname, string path, AppXIcon icon)
+        {
+            var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(displayname, CreationCollisionOption.ReplaceExisting);
+            await zip.GetEntry(path.Replace('\\', '/')).SaveToFile(file);
+            icon.Image = new BitmapImage(new Uri(file.Path));
         }
     }
 }

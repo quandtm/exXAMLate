@@ -17,6 +17,14 @@
             </StackPanel>
         </DataTemplate>
 
+
+        <DataTemplate x:Key="ListButtonTemplate">
+            <StackPanel Margin="-20,0,5,0" Orientation="Horizontal" Width="300">
+                <Button Style="{Binding Converter={StaticResource ButtonStyleConverter}}" VerticalAlignment="Top" ToolTipService.ToolTip="{Binding }"/>
+                <TextBlock Text="{Binding }" Style="{StaticResource BasicTextStyle}" Margin="-20,20,0,0" VerticalAlignment="Top" />
+            </StackPanel>
+        </DataTemplate>
+        
         <Style x:Key="AnatomyOfButtons" TargetType="GroupItem">
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="Template">
@@ -94,7 +102,6 @@
                                 <Button AutomationProperties.Name="Group Title" Style="{StaticResource TextPrimaryButtonStyle}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{Binding Title}" Margin="3,0,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
-                                        <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,0,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
                                     </StackPanel>
                                 </Button>
                             </Grid>
@@ -117,10 +124,10 @@
             Grid.Row="1"
             Visibility="Collapsed"
             Margin="0,-10,0,0"
-            Padding="10,0,0,60"
+            Padding="10,0,0,10"
             ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
             SelectionMode="None"
-            ItemTemplate="{StaticResource ButtonTemplate}"
+            ItemTemplate="{StaticResource ListButtonTemplate}"
             IsSwipeEnabled="false">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>

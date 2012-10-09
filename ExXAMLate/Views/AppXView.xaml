@@ -7,6 +7,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:callistoEffects="using:Callisto.Effects" xmlns:Controls="using:Callisto.Controls" mc:Ignorable="d">
     <common:LayoutAwarePage.Resources>
+        <DataTemplate x:Key="splashTemplate">
+            <Grid Height="150" Width="600" HorizontalAlignment="Left">
+                <Border Background="{Binding Background}" Width="300" callistoEffects:Tilt.IsTiltEnabled="True"  BorderBrush="{x:Null}" Margin="275,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Grid >
+                        <Image Source="{Binding Image}" Stretch="Uniform" Width="150" Height="150" />
+                    </Grid>
+                </Border>
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Title}" VerticalAlignment="Top" Style="{StaticResource SubheaderTextStyle}"/>
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="85" Width="275" Margin="0,35,0,0" Style="{StaticResource BasicTextStyle}" Text="{Binding Description}" />
+            </Grid>
+        </DataTemplate>
         <DataTemplate x:Key="iconTemplate">
             <Grid Height="150" Width="600" HorizontalAlignment="Left">
                 <Border Background="{Binding ElementName=pageRoot, Path=DataContext.Model.Background}" callistoEffects:Tilt.IsTiltEnabled="True"  BorderBrush="{x:Null}" Margin="275,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -38,8 +49,8 @@
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="85" Width="275" Margin="0,35,0,0" Style="{StaticResource BasicTextStyle}" Text="{Binding Description}" />
             </Grid>
         </DataTemplate>
-        
-        <common:IconSelector x:Key="IconSelector" IconTemplate="{StaticResource iconTemplate}" TileTemplate="{StaticResource tileTemplate}"/>
+
+        <common:IconSelector x:Key="IconSelector" IconTemplate="{StaticResource iconTemplate}" TileTemplate="{StaticResource tileTemplate}" SplashTemplate="{StaticResource splashTemplate}"/>
         
     </common:LayoutAwarePage.Resources>
         <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource BackgroundBrush}">

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="a9966386-fc49-4613-85b0-6e58c42dfeb2" Publisher="CN=Paul" Version="1.0.0.0" />
+  <Identity Name="a9966386-fc49-4613-85b0-6e58c42dfeb2" Publisher="CN=Paul" Version="1.0.0.3" />
   <Properties>
     <DisplayName>ExXAMLate</DisplayName>
     <PublisherDisplayName>Paul</PublisherDisplayName>
@@ -23,9 +23,6 @@
           <Rotation Preference="landscapeFlipped" />
         </InitialRotationPreference>
       </VisualElements>
-      <Extensions>
-        <Extension Category="windows.search" />
-      </Extensions>
     </Application>
   </Applications>
 </Package>
