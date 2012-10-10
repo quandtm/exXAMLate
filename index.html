@@ -1,0 +1,73 @@
+---
+
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>{{ site.title }}</title>
+		<link rel="shortcut icon" href="img/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="style.css" />
+		<style>
+			h1 { font-size: 3em; }		</style>
+	</head>
+	<body>
+		<div id="container">
+			<h1>Exterminate Win8/XAML issues with <em>exXAMLate</em></h1>
+			<div id="tablet">
+				<img id="screenshot" src="img/tablet_3.png" />
+			</div>
+			<div id="content">
+
+				<div id="features">
+					<h2>features</h2>
+					<ul>
+						<li>free and open source</li>
+						<li>AppX previewing</li>
+						<li>Icon visualisation</li>
+						<li>TextBlock style visualisation</li>
+						<li>WinRT XAML customisation using colour pickers</li>
+					</ul>
+				</div>
+
+				<div id="features">
+					<h2>future features</h2>
+					<ul>
+						<li>Search/Filter resources</li>
+						<li>App website generator</li>
+						<li>Privacy policy generator</li>
+					</ul>
+				</div>
+				<a class="blockbutton" href="http://apps.microsoft.com/webpdp/en-us/app/{{ site.appId }}">
+					<div class="blockbutton_icon"><img src="img/store.png" /></div>
+					<div class="blockbutton_text">download</div>
+				</a>
+			</div>
+
+			<div id="clear">&nbsp</div>
+
+			<div class="feature">
+			</div>
+<!-- 
+			{% for post in site.posts %}
+			<div class="feature">
+				<div class="feature-image {% if post.align != "left" %}right{% else %}left{% endif %}"><img src="{{post.screenshot}}" /></div>
+				<div class="feature-text {% if post.align == "left" %}left{% else %}right{% endif %}">
+					<h3>{{ post.title }} </h3>
+					{{ post.content }}
+				</div>
+				<div class="clear"></div>
+			</div>
+				
+			{% endfor %}
+ -->
+			<img src="img/dropshadow_border_bottom.png" id="screenshotborderbottom" class="screenshotborder" />
+	
+			<h2>Got a problem?</h2>
+			Head over to <a href="https://github.com/VikingCode/exXAMLate/issues">GitHub</a> and lodge an issue.
+			<br /><br /><br /><br /><br />
+		</div>
+	
+	</body>
+</html>

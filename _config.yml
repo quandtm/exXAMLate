@@ -1,0 +1,7 @@
+permalink: /:title.html
+auto: true
+markdown: rdiscount
+title: ExXAMLate
+accent: 009bbd
+accentLight: 00b7e0
+appId : 947c7343-316e-4501-bd84-d6b7b3bd7c8c
