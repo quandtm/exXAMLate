@@ -33,21 +33,25 @@
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="Insta-XAML customisation" Style="{StaticResource PageHeaderTextStyle}" FontFamily="Assets/fighting spirit TBS.ttf#Fighting Spirit TBS"/>
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top">
-            <StackPanel Background="#FF009BBD"  Width="400" HorizontalAlignment="Left" VerticalAlignment="Top" >
+            <StackPanel Background="#FF009BBD"  Width="400" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,50,0" >
                 <TextBlock Text="Did you know that..." Style="{StaticResource SubheaderTextStyle}" Margin="10" />
                 <TextBlock TextWrapping="Wrap" Style="{StaticResource BodyTextStyle}" Margin="10">
-            <Span>WinRT XAML lacks "DynamicResource" found in WPF. Most controls use the default "accent" colour, which is a vibrant purple. This means if you want to customise a system control - even if its just a single colour you want to change - you have to completely reimplement the style for it.</Span><LineBreak /><LineBreak />
-            <Span>That sucks.</Span><LineBreak /><LineBreak />
-            <Span>With this tool, you can punch in a colour value, and a new ResourceDictionary will be spat out, allowing you to quickly and easily 'brand' all the controls to your colour.</Span>
+                    <Span>WinRT XAML lacks "DynamicResource" found in WPF. Most controls use the default "accent" colour, which is a vibrant purple. This means if you want to customise a system control - even if its just a single colour you want to change - you have to completely reimplement the style for it.</Span><LineBreak /><LineBreak />
+                    <Span>That sucks.</Span><LineBreak /><LineBreak />
+                    <Span>With this tool, you can punch in a colour value, and a new ResourceDictionary will be spat out, allowing you to quickly and easily 'brand' all the controls to your colour.</Span><LineBreak /><LineBreak />
+                    <Span>Select a colour with the colour picker, press 'generate', then save the generic.xaml. You can include this in your App.xaml's Resources as a merged dictionary </Span>
                 </TextBlock>
 
             </StackPanel>
-            <ColourPicker:ColourPicker Width="400" Height="400" x:Name="picker" SelectedColour="{Binding SelectedColor, Mode=TwoWay}" />
-            <Rectangle Fill="{Binding ElementName=picker, Path=SelectedBrush}" Width="50" Height="50" VerticalAlignment="Top" />
+            <StackPanel>
+                <ColourPicker:ColourPicker  x:Name="picker" SelectedColour="{Binding SelectedColor, Mode=TwoWay}" SelectedBrush="Purple" />
+                <Rectangle Fill="{Binding ElementName=picker, Path=SelectedBrush}" Height="50" HorizontalAlignment="Left" Width="360" VerticalAlignment="Top" Margin="0,15,0,10" />
+                <Button Content="Generate" Margin="0,10,0,0"  Command="{Binding Generate}" />
+            </StackPanel>
             
         </StackPanel>
 
-        <Button Content="Generate" Margin="0,335,0,255" Grid.Row="1" Grid.Column="1" Command="{Binding Generate}" />
+        
 
         <Grid x:Name="noSnapped" Background="#FF009BBD" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">

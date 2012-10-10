@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="ExXAMLate.App">
-      <VisualElements DisplayName="ExXAMLate" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="ExXAMLate" ForegroundText="light" BackgroundColor="#009BBD">
+      <VisualElements DisplayName="ExXAMLate" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Problems getting your app certified? Remembering all the text or appbar styles? ExXAMLate is here to EXTERMINATE any issues you have." ForegroundText="light" BackgroundColor="#009BBD">
         <DefaultTile ShowName="allLogos" />
         <SplashScreen Image="Assets\SplashScreen.png" />
         <InitialRotationPreference>

@@ -14,7 +14,7 @@ namespace ExXAMLate.ViewModels
         {
             _navigation = navigation;
             var projects = new HomeGroup("Projects");
-            projects.Items.Add(new HomeViewGroupItem { Title = "App Checklist" });
+            projects.Items.Add(new HomeViewGroupItem { Title = "App Checklist", Clicked = new DelegateCommand(() => _navigation.NavigateTo("Checklist"))});
             projects.Items.Add(new HomeViewGroupItem { Title = "AppX Viewer", Clicked = new DelegateCommand(() => _navigation.NavigateTo("AppX"))});
             
             var resourceGroup = new HomeGroup("Resources");

@@ -108,6 +108,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Common\BoolToHalfOpacity.cs" />
     <Compile Include="Common\IconSelector.cs" />
     <Compile Include="Models\AppXSplash.cs" />
     <Compile Include="Models\ButtonAnatomyGroup.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\AppXIcon.cs" />
     <Compile Include="Models\AppXTile.cs" />
+    <Compile Include="ViewModels\ChecklistViewModel.cs" />
     <Compile Include="ViewModels\HammerPantsViewModel.cs" />
     <Compile Include="Models\HomeGroup.cs" />
     <Compile Include="Models\HomeViewGroupItem.cs" />
@@ -134,6 +136,9 @@
     </Compile>
     <Compile Include="Views\AppXView.xaml.cs">
       <DependentUpon>AppXView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChecklistView.xaml.cs">
+      <DependentUpon>ChecklistView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HammerPantsView.xaml.cs">
       <DependentUpon>HammerPantsView.xaml</DependentUpon>
@@ -206,6 +211,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ChecklistView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HammerPantsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -262,11 +271,11 @@
     </Reference>
     <Reference Include="SharpDX.Toolkit, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ColourPicker.0.0.3-ALPHA\lib\NetCore45\SharpDX.Toolkit.dll</HintPath>
+      <HintPath>..\packages\ColourPicker.0.0.4-ALPHA\lib\NetCore45\SharpDX.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Toolkit.Graphics, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ColourPicker.0.0.3-ALPHA\lib\NetCore45\SharpDX.Toolkit.Graphics.dll</HintPath>
+      <HintPath>..\packages\ColourPicker.0.0.4-ALPHA\lib\NetCore45\SharpDX.Toolkit.Graphics.dll</HintPath>
     </Reference>
     <Reference Include="System.Composition.AttributedModel">
       <HintPath>..\packages\Microsoft.Composition.1.0.15\lib\netcore45\System.Composition.AttributedModel.dll</HintPath>
@@ -285,7 +294,7 @@
     </Reference>
     <Reference Include="VikingCode.ColourPicker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ColourPicker.0.0.3-ALPHA\lib\NetCore45\VikingCode.ColourPicker.dll</HintPath>
+      <HintPath>..\packages\ColourPicker.0.0.4-ALPHA\lib\NetCore45\VikingCode.ColourPicker.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />

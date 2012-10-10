@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO.Compression;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -16,9 +17,20 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace ExXAMLate.ViewModels
 {
+    public class AppXIconGroup : Group<AppXIcon>
+    {
+        public AppXIconGroup(string title) : base(title)
+        {
+        }
+    }
+    public class AppXHeaderGroup : IGroup
+    {
+        public string Title { get; set; }
+    }
     public class AppXViewModel : NotifyPropertyChangedBase
     {
-        public ObservableCollection<AppXIcon> Icons { get; set; }
+        public ObservableCollection<IGroup> Groups { get; set; } 
+        //public ObservableCollection<AppXIcon> Icons { get; set; }
         public AppXModel Model
         {
             get { return _model; }
@@ -36,7 +48,8 @@ namespace ExXAMLate.ViewModels
         public AppXViewModel(INavigationManager navigation)
         {
             _navigation = navigation;
-            Icons = new ObservableCollection<AppXIcon>();
+            //Icons = new ObservableCollection<AppXIcon>();
+            Groups = new ObservableCollection<IGroup> {new AppXHeaderGroup()};
             GoBack = new DelegateCommand(() => _navigation.GoBack());
             Load();
         }
@@ -54,8 +67,10 @@ namespace ExXAMLate.ViewModels
 
                 var file = await f.PickSingleFileAsync();
                 if (file == null)
+                {
+                    _navigation.GoBack();
                     return;
-
+                }
 
                 var model = new AppXModel();
                 var zip = new ZipArchive((await file.OpenReadAsync()).AsStream(), ZipArchiveMode.Read);
@@ -68,9 +83,22 @@ namespace ExXAMLate.ViewModels
                 var visuals = application.Element(ns + "VisualElements");
 
                 model.DisplayName = visuals.Attribute("DisplayName").Value;
-                model.Background = new SolidColorBrush(ColorExtensions.FromString(visuals.Attribute("BackgroundColor").Value));
+                var c = ColorExtensions.FromString(visuals.Attribute("BackgroundColor").Value);
+                model.Background = new SolidColorBrush(c);
+                model.ForegroundText = visuals.Attribute("ForegroundText").Value;
 
-                var logo = new AppXIcon() { Description = "The \"regular\" logo is displayed as your square tile. It measures 150x150", Title = "Logo" };
+                model.ShouldChangeForeground = false;
+                var brightness = Hammer.Pants.ColorExtensions.GetBrightness(c);
+                if (brightness > 0.5 && model.ForegroundText == "light")
+                {
+                    model.ShouldChangeForeground = true;
+                } else if (brightness < 0.5 && model.ForegroundText == "dark")
+                {
+                    model.ShouldChangeForeground = true;
+                }
+                model.Description = visuals.Attribute("Description").Value;
+
+                var logo = new AppXIcon() { Description = "The \"regular\" logo is displayed as your square tile. It measures 150x150.", Title = "Logo" };
                 if (visuals.Attribute("Logo") != null)
                 {
                     var logopath = visuals.Attribute("Logo").Value;
@@ -83,7 +111,7 @@ namespace ExXAMLate.ViewModels
                 if (visuals.Attribute("SmallLogo") != null)
                     await GetImage(zip, model.DisplayName + "small.png", visuals.Attribute("SmallLogo").Value, smallLogo);
 
-                var storeLogo = new AppXTile { Description = "The store logo is visible on the Windows Store on the web and within the Windows Store app.", Title = "Store Logo", AppTitle = model.DisplayName };
+                var storeLogo = new AppXTile { Description = "The store logo is visible on the Windows Store on the web and within the Windows Store app. It measures 50x50.", Title = "Store Logo", AppTitle = model.DisplayName };
                 if (package.Element(ns + "Properties").Element(ns + "Logo") != null)
                     await GetImage(zip, model.DisplayName + "store.png", package.Element(ns + "Properties").Element(ns + "Logo").Value, storeLogo);
 
@@ -108,10 +136,13 @@ namespace ExXAMLate.ViewModels
               
 
                 Model = model;
-                Icons.Add(smallLogo);
-                Icons.Add(storeLogo);
-                Icons.Add(logo);
-                Icons.Add(splash);
+                var icons = new AppXIconGroup("Icons");
+                icons.Items.Add(smallLogo);
+                icons.Items.Add(storeLogo);
+                icons.Items.Add(logo);
+                icons.Items.Add(splash);
+
+                Groups.Add(icons);
             }
             catch (Exception o_0)
             {

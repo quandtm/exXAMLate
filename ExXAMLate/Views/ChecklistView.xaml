@@ -1,0 +1,104 @@
+﻿<common:LayoutAwarePage
+    x:Name="pageRoot"
+    x:Class="ExXAMLate.Views.ChecklistView"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:common="using:ExXAMLate.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <common:BoolToHalfOpacity x:Key="BoolToHalfOpacity" />
+    </Page.Resources>
+
+    <Grid Style="{StaticResource LayoutRootStyle}"  Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Back button and page title -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" Command="{Binding GoBack}" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="App Checklist" Style="{StaticResource PageHeaderTextStyle}" FontFamily="Assets/fighting spirit TBS.ttf#Fighting Spirit TBS"/>
+        </Grid>
+        <StackPanel Margin="120,0,0,0" Grid.Row="1" MaxWidth="700" HorizontalAlignment="Left">
+            <CheckBox VerticalAlignment="Stretch" Margin="0,0,0,10" Opacity="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked, Converter={StaticResource BoolToHalfOpacity}}">
+                <StackPanel>
+                    <TextBlock Text="Does your app pass WACK?" Style="{StaticResource TitleTextStyle}"  Margin="0,-8,0,0" />
+                    <TextBlock Text="WACK (Windows Application Certification Kit) is installed with Visual Studio 2012, and you can use this to make sure your application passes the basic steps towards certification. This checks for APIs you shouldn't be using, security issues, etc." Style="{StaticResource BodyTextStyle}"/>
+                </StackPanel>
+            </CheckBox>
+
+            <CheckBox VerticalAlignment="Stretch" Margin="0,0,0,10" Opacity="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked, Converter={StaticResource BoolToHalfOpacity}}">
+                <StackPanel>
+                    <TextBlock Text="Is a privacy policy in place?" Style="{StaticResource TitleTextStyle}"  Margin="0,-8,0,0" />
+                    <TextBlock Style="{StaticResource BodyTextStyle}">
+                        The default Windows Store app template includes 'Internet (Client)' in the permission ('Capabilities') list. Even if you don't connect to the internet, if you have that in the permission list you must have a privacy policy<LineBreak />
+                        <Span>Other permissions that require a privacy policy are<LineBreak /></Span>
+                        <Span>&#9679; Internet (Client &amp; Server)<LineBreak /></Span>
+                        <Span>&#9679; Location<LineBreak /></Span>
+                        <Span>&#9679; Webcam<LineBreak /></Span>
+                        <Span>&#9679; Microphone<LineBreak /></Span>
+                        <Span>If any personally identifiable information is captured/access, you must have a privacy policy</Span>
+                    </TextBlock>
+                </StackPanel>
+            </CheckBox>
+
+
+            <CheckBox VerticalAlignment="Stretch" Margin="0,0,0,10" Opacity="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked, Converter={StaticResource BoolToHalfOpacity}}">
+                <StackPanel>
+                    <TextBlock Text="Does your app support 'snapped' mode?" Style="{StaticResource TitleTextStyle}"  Margin="0,-8,0,0" />
+                    <TextBlock Text="Windows 8 app certification requirements 3.6 state 'Your app must support a snapped layout'. That can be as simple as altering your layout, or presenting a 'this app needs fullscreen' placeholder" Style="{StaticResource BodyTextStyle}"/>
+                    <Button Content="Read all Windows 8 app certification requirements" Margin="-4,7,0,0" Command="{Binding GoToRequirements}"/>
+                </StackPanel>
+            </CheckBox>
+
+
+            <CheckBox VerticalAlignment="Stretch" Margin="0,0,0,10" Opacity="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked, Converter={StaticResource BoolToHalfOpacity}}">
+                <StackPanel>
+                    <TextBlock Text="Are all icons and colours (such as splashscreen) in place and correct for your app?" Style="{StaticResource TitleTextStyle}" Margin="0,-8,0,0" />
+                    <TextBlock Style="{StaticResource BodyTextStyle}">
+                        Some icons (like Store Logo) are a little more discretely hidden than others.
+                    </TextBlock>
+                    <Button Content="If you're unsure, use the AppX Viewer to check!" Margin="-4,7,0,0" Command="{Binding GoToAppX}"/>
+                </StackPanel>
+            </CheckBox>
+
+        </StackPanel>
+
+        <VisualStateManager.VisualStateGroups>
+
+            <!-- Visual states reflect the application's view state -->
+            <VisualStateGroup x:Name="ApplicationViewStates">
+                <VisualState x:Name="FullScreenLandscape"/>
+                <VisualState x:Name="Filled"/>
+
+                <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
+                <VisualState x:Name="FullScreenPortrait">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+
+                <!-- The back button and title have different styles when snapped -->
+                <VisualState x:Name="Snapped">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</common:LayoutAwarePage>

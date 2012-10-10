@@ -7,6 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:callistoEffects="using:Callisto.Effects" xmlns:Controls="using:Callisto.Controls" mc:Ignorable="d">
     <common:LayoutAwarePage.Resources>
+        <common:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <CollectionViewSource
+	        x:Name="groupedItemsViewSource"
+	        Source="{Binding Groups}"
+	        IsSourceGrouped="true"
+	        ItemsPath="Items"/>
+
         <DataTemplate x:Key="splashTemplate">
             <Grid Height="150" Width="600" HorizontalAlignment="Left">
                 <Border Background="{Binding Background}" Width="300" callistoEffects:Tilt.IsTiltEnabled="True"  BorderBrush="{x:Null}" Margin="275,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -50,10 +57,37 @@
             </Grid>
         </DataTemplate>
 
+        <Style x:Key="AppXHeader" TargetType="GroupItem">
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GroupItem">
+                        <Grid Height="500" Width="450" VerticalAlignment="Top" Background="#FF009BBD" Margin="0,0,50,0">
+                            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="AppX Analysis" VerticalAlignment="Top" Style="{StaticResource SubheaderTextStyle}" Margin="10,0,0,0"/>
+                            <StackPanel Margin="10,50,10,10">
+                                <TextBlock Text="{Binding  ElementName=pageRoot, Path=DataContext.Model.DisplayName}" Style="{StaticResource TitleTextStyle}"  />
+                                <TextBlock Text="{Binding  ElementName=pageRoot, Path=DataContext.Model.Description}" Style="{StaticResource BodyTextStyle}" Margin="0,10,0,0"/>
+                                <TextBlock Style="{StaticResource BodyTextStyle}" Margin="0,10,0,0">
+                                    Your icons/store colours will use <Run Text="{Binding  ElementName=pageRoot, Path=DataContext.Model.ForegroundText}" /> text
+                                </TextBlock>
+                                <TextBlock Margin="0,10,0,0"
+                                           Text="There isn't enough contrast between your background colour and foreground text choice! You should considering changing these values" 
+                                           Visibility="{Binding  ElementName=pageRoot, Path=DataContext.Model.ShouldChangeForeground, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource BodyTextStyle}"
+                                           FontWeight="Bold"/>
+                                <!--<TextBlock Text="{Binding  ElementName=pageRoot, Path=DataContext.Model.DisplayName}" Style="{StaticResource BodyTextStyle}" />-->   
+                            </StackPanel>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <common:IconSelector x:Key="IconSelector" IconTemplate="{StaticResource iconTemplate}" TileTemplate="{StaticResource tileTemplate}" SplashTemplate="{StaticResource splashTemplate}"/>
-        
+
+        <common:ContainerStyleSelector x:Key="ContainerStyleSelector" AppXHeader="{StaticResource AppXHeader}"  />
+
     </common:LayoutAwarePage.Resources>
-        <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource BackgroundBrush}">
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource BackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
@@ -70,7 +104,50 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <GridView Background="{x:Null}" ItemsSource="{Binding Icons}" Margin="120,0,0,0" SelectionMode="None" ItemTemplateSelector="{StaticResource IconSelector}" />
+            <!--<GridView 
+                Background="{x:Null}" 
+                ItemsSource="{Binding Icons}" 
+                Margin="120,0,0,0" 
+                SelectionMode="None"
+                ItemTemplateSelector="{StaticResource IconSelector}" />-->
+            <GridView
+                x:Name="itemGridView"
+                AutomationProperties.AutomationId="ItemGridView"
+                AutomationProperties.Name="Grouped Items"
+                Grid.RowSpan="2"
+                ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
+                Padding="116,0,40,46"
+                SelectionMode="None"
+                IsSwipeEnabled="false"
+                 ItemTemplateSelector="{StaticResource IconSelector}"
+                IsItemClickEnabled="False">
+
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+                <GridView.GroupStyle>
+                    <GroupStyle ContainerStyleSelector="{StaticResource ContainerStyleSelector}">
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <Grid Margin="1,0,0,6">
+                                    <Button AutomationProperties.Name="Group Title" Style="{StaticResource TextPrimaryButtonStyle}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Title}" Margin="3,0,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                        <GroupStyle.Panel>
+                            <ItemsPanelTemplate>
+                                <VariableSizedWrapGrid Orientation="Vertical" Margin="0"/>
+                            </ItemsPanelTemplate>
+                        </GroupStyle.Panel>
+                    </GroupStyle>
+                </GridView.GroupStyle>
+            </GridView>
         </Grid>
         <VisualStateManager.VisualStateGroups>
 
