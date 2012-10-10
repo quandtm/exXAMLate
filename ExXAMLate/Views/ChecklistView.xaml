@@ -26,7 +26,8 @@
             <Button x:Name="backButton" Command="{Binding GoBack}" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="App Checklist" Style="{StaticResource PageHeaderTextStyle}" FontFamily="Assets/fighting spirit TBS.ttf#Fighting Spirit TBS"/>
         </Grid>
-        <StackPanel Margin="120,0,0,0" Grid.Row="1" MaxWidth="700" HorizontalAlignment="Left">
+        <ScrollViewer Margin="120,0,0,0" Grid.Row="1" MaxWidth="700" HorizontalAlignment="Left" x:Name="sp" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel >
             <CheckBox VerticalAlignment="Stretch" Margin="0,0,0,10" Opacity="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked, Converter={StaticResource BoolToHalfOpacity}}">
                 <StackPanel>
                     <TextBlock Text="Does your app pass WACK?" Style="{StaticResource TitleTextStyle}"  Margin="0,-8,0,0" />
@@ -70,7 +71,7 @@
             </CheckBox>
 
         </StackPanel>
-
+        </ScrollViewer>
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->
@@ -96,6 +97,10 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
                         </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="sp" Storyboard.TargetProperty="Margin">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="5,0,5,0"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>

@@ -6,13 +6,12 @@ namespace ExXAMLate.Views
     {
         public HammerPantsView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Windows.UI.ViewManagement.ApplicationView.TryUnsnap();
-
         }
     }
 }
