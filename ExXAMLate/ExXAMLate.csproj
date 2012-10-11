@@ -189,6 +189,7 @@
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
+    <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -254,29 +255,6 @@
     <Reference Include="Okra.MEF">
       <HintPath>..\packages\Okra.MEF.0.9.4\lib\.NETCore45\Okra.MEF.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX">
-      <HintPath>..\packages\SharpDX.2.3.1\lib\winrt\SharpDX.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.D3DCompiler">
-      <HintPath>..\packages\SharpDX.D3DCompiler.2.3.1\lib\winrt\SharpDX.D3DCompiler.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Direct2D1">
-      <HintPath>..\packages\SharpDX.Direct2D1.2.3.1\lib\winrt\SharpDX.Direct2D1.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Direct3D11">
-      <HintPath>..\packages\SharpDX.Direct3D11.2.3.1\lib\winrt\SharpDX.Direct3D11.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.DXGI">
-      <HintPath>..\packages\SharpDX.DXGI.2.3.1\lib\winrt\SharpDX.DXGI.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Toolkit, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ColourPicker.0.0.4-ALPHA\lib\NetCore45\SharpDX.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Toolkit.Graphics, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ColourPicker.0.0.4-ALPHA\lib\NetCore45\SharpDX.Toolkit.Graphics.dll</HintPath>
-    </Reference>
     <Reference Include="System.Composition.AttributedModel">
       <HintPath>..\packages\Microsoft.Composition.1.0.15\lib\netcore45\System.Composition.AttributedModel.dll</HintPath>
     </Reference>
@@ -294,7 +272,11 @@
     </Reference>
     <Reference Include="VikingCode.ColourPicker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ColourPicker.0.0.4-ALPHA\lib\NetCore45\VikingCode.ColourPicker.dll</HintPath>
+      <HintPath>..\packages\ColourPicker.0.0.5-ALPHA\lib\NetCore45\VikingCode.ColourPicker.dll</HintPath>
+    </Reference>
+    <Reference Include="WriteableBitmapEx.WinRT, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ColourPicker.0.0.5-ALPHA\lib\NetCore45\WriteableBitmapEx.WinRT.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />
