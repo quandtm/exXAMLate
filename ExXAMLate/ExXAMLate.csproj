@@ -118,6 +118,8 @@
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\AppXIcon.cs" />
     <Compile Include="Models\AppXTile.cs" />
+    <Compile Include="ViewModels\AppXHeaderGroup.cs" />
+    <Compile Include="ViewModels\AppXIconGroup.cs" />
     <Compile Include="ViewModels\ChecklistViewModel.cs" />
     <Compile Include="ViewModels\HammerPantsViewModel.cs" />
     <Compile Include="Models\HomeGroup.cs" />
@@ -247,6 +249,9 @@
   <ItemGroup>
     <Reference Include="Callisto">
       <HintPath>..\packages\Callisto.1.2.3\lib\winrt45\Callisto.dll</HintPath>
+    </Reference>
+    <Reference Include="MarkedUp">
+      <HintPath>..\packages\MarkedUp.0.5.5\lib\winrt45\MarkedUp.winmd</HintPath>
     </Reference>
     <Reference Include="Okra.Core">
       <HintPath>..\packages\Okra.Core.0.9.4\lib\.NETCore45\Okra.Core.dll</HintPath>

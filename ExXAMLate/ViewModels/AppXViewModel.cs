@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO.Compression;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Linq;
@@ -9,6 +10,7 @@ using ExXAMLate.Common;
 using ExXAMLate.Models;
 using Okra.Core;
 using Okra.Navigation;
+using Windows.Graphics.Display;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using System.IO;
@@ -17,20 +19,9 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace ExXAMLate.ViewModels
 {
-    public class AppXIconGroup : Group<AppXIcon>
-    {
-        public AppXIconGroup(string title) : base(title)
-        {
-        }
-    }
-    public class AppXHeaderGroup : IGroup
-    {
-        public string Title { get; set; }
-    }
     public class AppXViewModel : NotifyPropertyChangedBase
     {
-        public ObservableCollection<IGroup> Groups { get; set; } 
-        //public ObservableCollection<AppXIcon> Icons { get; set; }
+        public ObservableCollection<IGroup> Groups { get; set; }
         public AppXModel Model
         {
             get { return _model; }
@@ -48,19 +39,19 @@ namespace ExXAMLate.ViewModels
         public AppXViewModel(INavigationManager navigation)
         {
             _navigation = navigation;
-            //Icons = new ObservableCollection<AppXIcon>();
-            Groups = new ObservableCollection<IGroup> {new AppXHeaderGroup()};
+            Groups = new ObservableCollection<IGroup> { new AppXHeaderGroup() };
             GoBack = new DelegateCommand(() => _navigation.GoBack());
             Load();
         }
 
         public async Task Load()
         {
+            var model = new AppXModel();
             try
             {
                 Windows.UI.ViewManagement.ApplicationView.TryUnsnap();
 
-                var f = new FileOpenPicker()
+                var f = new FileOpenPicker
                     {
                         FileTypeFilter = { ".appx" }
                     };
@@ -72,8 +63,8 @@ namespace ExXAMLate.ViewModels
                     return;
                 }
 
-                var model = new AppXModel();
                 var zip = new ZipArchive((await file.OpenReadAsync()).AsStream(), ZipArchiveMode.Read);
+                var entries = zip.Entries.ToList();
                 var manifest = zip.GetEntry("AppxManifest.xml");
 
                 XNamespace ns = "http://schemas.microsoft.com/appx/2010/manifest";
@@ -92,69 +83,77 @@ namespace ExXAMLate.ViewModels
                 if (brightness > 0.5 && model.ForegroundText == "light")
                 {
                     model.ShouldChangeForeground = true;
-                } else if (brightness < 0.5 && model.ForegroundText == "dark")
+                }
+                else if (brightness < 0.5 && model.ForegroundText == "dark")
                 {
                     model.ShouldChangeForeground = true;
                 }
                 model.Description = visuals.Attribute("Description").Value;
 
-                var logo = new AppXIcon() { Description = "The \"regular\" logo is displayed as your square tile. It measures 150x150.", Title = "Logo" };
+                var logo = new AppXIcon { Description = "The \"regular\" logo is displayed as your square tile. It measures 150x150.", Title = "Logo" };
                 if (visuals.Attribute("Logo") != null)
-                {
-                    var logopath = visuals.Attribute("Logo").Value;
-                    var logoFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(model.DisplayName + ".png", CreationCollisionOption.ReplaceExisting);
-                    await zip.GetEntry(logopath.Replace('\\', '/')).SaveToFile(logoFile);
-                    logo.Image = new BitmapImage(new Uri(logoFile.Path));
-                }
+                    await GetImage(zip, model.DisplayName + ".png", visuals.Attribute("Logo").Value, logo, entries);
 
                 var smallLogo = new AppXIcon { Description = "The small logo is displayed in search results, \"show all apps\", and in the search charm (vertical list). It measures 30x30.", Title = "Small Logo" };
                 if (visuals.Attribute("SmallLogo") != null)
-                    await GetImage(zip, model.DisplayName + "small.png", visuals.Attribute("SmallLogo").Value, smallLogo);
+                    await GetImage(zip, model.DisplayName + "small.png", visuals.Attribute("SmallLogo").Value, smallLogo, entries);
 
                 var storeLogo = new AppXTile { Description = "The store logo is visible on the Windows Store on the web and within the Windows Store app. It measures 50x50.", Title = "Store Logo", AppTitle = model.DisplayName };
                 if (package.Element(ns + "Properties").Element(ns + "Logo") != null)
-                    await GetImage(zip, model.DisplayName + "store.png", package.Element(ns + "Properties").Element(ns + "Logo").Value, storeLogo);
+                    await GetImage(zip, model.DisplayName + "store.png", package.Element(ns + "Properties").Element(ns + "Logo").Value, storeLogo, entries);
+                
+                var wideLogo = new AppXIcon { Description = "The wide logo is an optional, double width tile. It measures 320x150.", Title = "Wide Logo" };
+                if (visuals.Element(ns + "DefaultTile") != null && visuals.Element(ns + "DefaultTile").Attribute("WideLogo") != null)
+                    await GetImage(zip, model.DisplayName + "wide.png", visuals.Element(ns + "DefaultTile").Attribute("WideLogo").Value, wideLogo, entries);
 
                 var splash = new AppXSplash { Description = "", Title = "Splash Screen" };
                 if (visuals.Element(ns + "SplashScreen").Attribute("Image") != null)
-                    await GetImage(zip, model.DisplayName + "splash.png", visuals.Element(ns + "SplashScreen").Attribute("Image").Value, splash);
+                    await GetImage(zip, model.DisplayName + "splash.png", visuals.Element(ns + "SplashScreen").Attribute("Image").Value, splash, entries);
 
                 if (visuals.Element(ns + "SplashScreen").Attribute("BackgroundColor") != null)
                     splash.Background = new SolidColorBrush(ColorExtensions.FromString(visuals.Element(ns + "SplashScreen").Attribute("BackgroundColor").Value));
                 else
                     splash.Background = model.Background;
                 
-
-                //if (visuals.Attribute("WideLogoImage") != null)
-                //{
-                //    //model.SmallLogo = visuals.Attribute("WideLogo").Value;
-                //    var widelogoimage = await ApplicationData.Current.LocalFolder.CreateFileAsync(model.DisplayName + "wide.png", CreationCollisionOption.ReplaceExisting);
-                //    await zip.GetEntry(model.SmallLogo.Replace('\\', '/')).SaveToFile(widelogoimage);
-                //    model.WideLogoImage = new BitmapImage(new Uri(widelogoimage.Path));
-                //}
-
-              
-
-                Model = model;
                 var icons = new AppXIconGroup("Icons");
                 icons.Items.Add(smallLogo);
                 icons.Items.Add(storeLogo);
                 icons.Items.Add(logo);
+                if (wideLogo.Image != null)
+                    icons.Items.Add(wideLogo);
                 icons.Items.Add(splash);
 
                 Groups.Add(icons);
             }
             catch (Exception o_0)
             {
-
+                MarkedUp.AnalyticClient.Info("Error parsing appx", o_0);
             }
+
+            Model = model;
         }
 
-        private static async Task GetImage(ZipArchive zip, string displayname, string path, AppXIcon icon)
+        private static async Task GetImage(ZipArchive zip, string displayname, string path, AppXIcon icon, IEnumerable<ZipArchiveEntry> entries)
         {
-            var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(displayname, CreationCollisionOption.ReplaceExisting);
-            await zip.GetEntry(path.Replace('\\', '/')).SaveToFile(file);
-            icon.Image = new BitmapImage(new Uri(file.Path));
+            try
+            {
+                path = path.Replace('\\', '/');
+
+                var item = entries.FirstOrDefault(z => z.FullName == path);
+                if (item == null)
+                {
+                    var ext = Path.GetExtension(path);
+                    path = string.Format("{0}/{1}.scale-{2}{3}", Path.GetDirectoryName(path).Replace('\\', '/'), Path.GetFileNameWithoutExtension(path), (int)DisplayProperties.ResolutionScale, ext);
+                }
+
+                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(displayname, CreationCollisionOption.ReplaceExisting);
+                await zip.GetEntry(path).SaveToFile(file);
+                icon.Image = new BitmapImage(new Uri(file.Path));
+            }
+            catch (Exception o_0)
+            {
+                MarkedUp.AnalyticClient.Info("Error retrieving image from appx", o_0);
+            }
         }
     }
 }

@@ -24,6 +24,7 @@ namespace ExXAMLate
 
         void ActivationManagerActivated(object sender, IActivatedEventArgs e)
         {
+            MarkedUp.AnalyticClient.Initialize("1c860942-b1c6-46e7-95b5-ee460dbaef1a");
             //var dataTransferManager = DataTransferManager.GetForCurrentView();
             //dataTransferManager.DataRequested += ShareRequested;
 
